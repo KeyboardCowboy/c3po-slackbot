@@ -1,9 +1,9 @@
 {
-  "name": "rosiebot",
+  "name": "C3PO",
   "version": "0.0.0",
   "private": true,
-  "author": "Sally Young <sally@justafish.co.uk>",
-  "description": "lullabot.com robot",
+  "author": "Chris Albrecht <chris@lullabot.com>",
+  "description": "C3PO Translating Slack Bot",
   "dependencies": {
     "cheerio": "^0.19.0",
     "flip": "^0.1.1",
