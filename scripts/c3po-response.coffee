@@ -31,14 +31,23 @@ hellos = [
   "Am I the droid you seek, %?"
 ]
 module.exports = (robot) ->
+  # Random greeting response.
   robot.respond /(hello|hi|hey|goodday)/i, (msg) ->
     hello = msg.random hellos
     msg.send hello.replace "%", msg.message.user.name
 
+  # Random greeting mention.
   robot.hear /(hello|hi|hey|goodday)\s+\@c3po/i, (msg) ->
     hello = msg.random hellos
     msg.send hello.replace "%", msg.message.user.name
 
+  # Welcome to the room greeting.
   robot.enter (msg) ->
     greeting = "Hello %. I am C-3PO, human-cyborg relations."
     msg.send greeting.replace "%", msg.message.user.name
+
+  # Link to the issue queue.
+  robot.respond /(.*)(you\'re broke(n)?|you\'re drunk|fail|wtf[\?\!]+|that\'s wrong)(.*)|(^wtf$)/i, (res) ->
+    response = "Oh dear me. Did I do something wrong? Please inform my master immediately.\n"
+    response += "https://github.com/KeyboardCowboy/c3po-slackbot/issues"
+    res.send response
