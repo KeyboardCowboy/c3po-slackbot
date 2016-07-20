@@ -1,21 +1,22 @@
 {
-  "name": "node-js-getting-started",
+  "name": "C3PO Slack Translator",
   "version": "0.2.5",
-  "description": "A sample Node.js app using Express 4",
+  "description": "Listens for unit-based information and provides conversions.",
   "engines": {
     "node": "5.9.1"
   },
-  "main": "index.js",
+  "main": "slack_bot.js",
   "scripts": {
-    "start": "node index.js"
+    "start": "node slack_bot.js"
   },
   "dependencies": {
     "ejs": "2.4.1",
-    "express": "4.13.3"
+    "express": "4.13.3",
+    "botkit": "0.2.2"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/heroku/node-js-getting-started"
+    "url": "https://github.com/KeyboardCowboy/c3po-slackbot"
   },
   "keywords": [
     "node",
