@@ -8,22 +8,36 @@
 # Author:
 #    KeyboardCowboy <chris@lullabot.com>
 #
+
 module.exports = (robot) ->
-  robot.hear /(\-?\d*)\ ?(f|c)([\ \.\,\?])/i, (msg) ->
+  # Convert Fahrenheit.
+  robot.hear /(\-?\d*)\ ?(f)([\ \.\,\?])/i, (msg) ->
     unit = msg.match[1]
-    scale = msg.match[2]
+    converted_unit = Math.round((unit - 32) * (5/9))
 
-    if (unit != '' && !isNaN(unit))
-      # Fahrenheit to Celsius.
-      if (scale == 'F' || scale == 'f')
-        converted_unit = Math.round((parseInt(unit) - 32) * (5/9))
-        converted_scale = 'C'
-      # Celsius to Fahrenheit.
-      else
-        converted_unit = Math.round(unit * (9/5) + 32)
-        converted_scale = 'F'
+    response = unit + "°F converts to " + converted_unit + "°C"
+    msg.send(response)
 
+  # Convert Celsius.
+  robot.hear /(\-?\d*)\ ?(c)([\ \.\,\?])/i, (msg) ->
+    unit = msg.match[1]
+    converted_unit = Math.round((unit * (9/5)) + 32)
 
-      response = unit + "°" + scale + " converts to " + converted_unit + "°" + converted_scale
+    response = unit + "°C converts to " + converted_unit + "°F"
+    msg.send(response)
 
-      msg.send(response)
+  # Convert miles.
+  robot.hear /(-?\d*(\.\d+)?)(\s+)?(mile(s)?|mi)([\ \.\,\?])/i, (msg) ->
+    unit = msg.match[1]
+    converted_unit = (unit * 1.61).toFixed(2)
+
+    response = unit + " miles converts to " + converted_unit + " kilometers."
+    msg.send(response)
+
+  # Convert kilometers.
+  robot.hear /(-?\d*(\.\d+)?)(\s+)?(kilometer(s)?|km)([\ \.\,\?])/i, (msg) ->
+    unit = msg.match[1]
+    converted_unit = (unit * 0.62).toFixed(2)
+
+    response = unit + " kilometers converts to " + converted_unit + " miles."
+    msg.send(response)
