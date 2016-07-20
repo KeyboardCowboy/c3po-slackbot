@@ -8,37 +8,39 @@
 #    KeyboardCowboy <chris@lullabot.com>
 #
 
-hellos = [
-  "It sounds like Han! Oh, hello %.",
-  "Well hello there, %.",
-  "Good day, %.",
-  "If I may say so, %, I noticed earlier the hyperdrive motivator has been damaged.",
-  "Well, he seems very friendly.",
-  "That sounds like an R2 unit in there! I wonder if... Hello? How interesting.",
-  "Use the comlink? Oh my! I forgot, I turned it off. ",
-  "Is there anything I can do? ",
-  "May the Force be with you.",
-  "I do believe they think I am some kind of god.",
-  "I'm rather embarrassed, %, but it appears that you are to be the main course at a banquet in my honor.",
-  "Wonderful. We are now a part of the tribe.",
-  "At last, %'s come to rescue me!",
-  "Your Royal Highness.",
-  "The maker has returned!",
-  "Hello, I am C-3PO, human cyborg relations. How might I serve you, %?",
-  "Excuse me, %, but where are we?",
-  "Oh, my dear friend, how I've missed you.",
-  "Goodness! %! It is I, C-3PO. You probably don't recognize me because of the red arm.",
-  "Am I the droid you seek, %?"
-]
+config = require('../config.json')
+greetings = require('../text/greetings.json')
+affirms = require('../text/affirmations.json')
+odds = require('../text/odds.json');
+
+# Send a user some congrats.
+congratulate = (name, res, robot) ->
+  karmaLog = robot.brain.get('karmaLog') || []
+
+  # Send a basic congrats.
+  response = res.random(affirms).replace "%name", name
+  res.send response
+
+  now = new Date()
+  last_karma = karmaLog[name] || 0
+  give_karma = last_karma < (now.getTime() - (config.time.hours * 1))
+
+  # If we haven't given this user karma in the last hour, do it now.
+  if give_karma
+    res.send name + "++"
+    karmaLog[name] = now.getTime()
+    robot.brain.set 'karmaLog', karmaLog
+
+
 module.exports = (robot) ->
   # Random greeting response.
-  robot.respond /(hello|hi|hey|goodday)/i, (msg) ->
-    hello = msg.random hellos
+  robot.respond /(hello|hi|hey|good day)/i, (msg) ->
+    hello = msg.random greetings
     msg.send hello.replace "%", msg.message.user.name
 
   # Random greeting mention.
-  robot.hear /(hello|hi|hey|goodday)\s+\@c3po/i, (msg) ->
-    hello = msg.random hellos
+  robot.hear /(hello|hi|hey|good day)\s+\@c3po/i, (msg) ->
+    hello = msg.random greetings
     msg.send hello.replace "%", msg.message.user.name
 
   # Welcome to the room greeting.
@@ -51,3 +53,13 @@ module.exports = (robot) ->
     response = "Oh dear me. Did I do something wrong? Please inform my master immediately.\n"
     response += "https://github.com/KeyboardCowboy/c3po-slackbot/issues"
     res.send response
+
+  # C3PO congratulates and occasionally throws you some karma.
+  robot.hear /^(@\w+) (is awesome|kick(s)? ass|rules|nice)(\!+)?$/i, (res) ->
+    congratulate(res.match[1], res);
+  robot.hear /^(way to go|kick ass|well done|nice|awesome|good job|you\'re the best)[\ \,]+?(@\w+)(\!+)?$/i, (res) ->
+    congratulate(res.match[2], res, robot);
+
+  # Niche responses.
+  robot.hear /what are the odds/i, (res) ->
+    res.send res.random(odds).replace "%name", res.message.user.name
