@@ -8,7 +8,7 @@
 config = require('../config.json')
 
 module.exports = (robot) ->
-  robot.respond /^help(\!+)?$/i, (res) ->
+  robot.respond /help(\!+)?$/i, (res) ->
     response = "Oh no, %name is in trouble! Curse my metal body, I wasn't fast enough, it's all my fault!\n"
     response += "Try one of these commands:\n"
     response += "- *convert* x unit to y (ex. 'convert 5lb to kg')\n"
