@@ -26,4 +26,5 @@ module.exports = (robot) ->
     msg.send hello.replace "%", msg.message.user.name
 
   robot.enter (msg) ->
-    msg.send "I am C-3PO, human-cyborg relations."
+    greeting = "Hello %. I am C-3PO, human-cyborg relations."
+    msg.send greeting.replace "%", msg.message.user.name

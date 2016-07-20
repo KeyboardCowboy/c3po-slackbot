@@ -24,6 +24,6 @@ module.exports = (robot) ->
         converted_scale = 'F'
 
 
-      response = unit + "°" + scale + " is " + converted_unit + "°" + converted_scale
+      response = unit + "°" + scale + " converts to " + converted_unit + "°" + converted_scale
 
       msg.send(response)
