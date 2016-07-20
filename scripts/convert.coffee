@@ -11,16 +11,16 @@
 convert = require('convert-units')
 
 response = [
-  '%1 converts to %2',
-  '%1 is the same as %2',
-  '%1 equals %2',
-  '%1 is equal to %2',
-  '%1 is equivalent to %2',
-  '%1 could be written as %2',
-  '%1 is %2',
-  '%1 == %2',
-  '%1 or %2. Choose wisely, master %3',
-  'I say %1, R2 says %2',
+  "%1 converts to %2",
+  "%1 is the same as %2",
+  "%1 equals %2",
+  "%1 is equal to %2",
+  "%1 is equivalent to %2",
+  "%1 could be written as %2",
+  "%1 is %2",
+  "%1 == %2",
+  "%1 or %2. Choose wisely, master %3",
+  "I say %1, R2 says %2",
   "%3, are you quite sure you didn't mean %2?"
 ]
 
@@ -56,6 +56,12 @@ module.exports = (robot) ->
     value = msg.match[1]
     converted_value = convert(value).from('km').to('mi').toFixed(2);
     msg.send parse_response msg, value, ' kilometers', converted_value, ' miles'
+
+  # Convert rods/hogshead.
+  robot.hear /(-?\d+(\.\d+)?) rods( per |\/| to the )hogshead([\ \.\,\?]|$)/i, (res) ->
+    value = res.match[1];
+    converted_value = ((value * .0031) / 63).toFixed(4);
+    res.send "Mr. Simpson, " + value + " rods to the hogshead is " + converted_value, " miles per gallon."
 
   # Conversion on demand.
   robot.respond /convert (-?\d+(\.\d+)?)(\s+)?([a-z0-9\-]{1,5}) to ([a-z0-9\-]{1,5})/i, (msg) ->
