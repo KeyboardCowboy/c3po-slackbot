@@ -24,10 +24,11 @@ hellos = [
   "At last, %'s come to rescue me!",
   "Your Royal Highness.",
   "The maker has returned!",
-  "Hello, I am C-3PO, human cyborg relations. How might I serve you?",
+  "Hello, I am C-3PO, human cyborg relations. How might I serve you, %?",
   "Excuse me, %, but where are we?",
   "Oh, my dear friend, how I've missed you.",
-  "Goodness! %! It is I, C-3PO. You probably don't recognize me because of the red arm."
+  "Goodness! %! It is I, C-3PO. You probably don't recognize me because of the red arm.",
+  "Am I the droid you seek, %?"
 ]
 module.exports = (robot) ->
   robot.respond /(hello|hi|hey|goodday)/i, (msg) ->
