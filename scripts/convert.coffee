@@ -11,7 +11,7 @@
 
 module.exports = (robot) ->
   # Convert Fahrenheit.
-  robot.hear /(-?\d+(\.\d+)?)(\s+)?(f)([\ \.\,\?])/i, (msg) ->
+  robot.hear /(-?\d+(\.\d+)?)(\s+)?(f)([\ \.\,\?]|$)/i, (msg) ->
     unit = msg.match[1]
     converted_unit = Math.round((unit - 32) * (5/9))
 
@@ -19,7 +19,7 @@ module.exports = (robot) ->
     msg.send(response)
 
   # Convert Celsius.
-  robot.hear /(-?\d+(\.\d+)?)(\s+)?(c)([\ \.\,\?])/i, (msg) ->
+  robot.hear /(-?\d+(\.\d+)?)(\s+)?(c)([\ \.\,\?]|$)/i, (msg) ->
     unit = msg.match[1]
     converted_unit = Math.round((unit * (9/5)) + 32)
 
@@ -27,7 +27,7 @@ module.exports = (robot) ->
     msg.send(response)
 
   # Convert miles.
-  robot.hear /(-?\d+(\.\d+)?)(\s+)?(mile(s)?|mi)([\ \.\,\?])/i, (msg) ->
+  robot.hear /(-?\d+(\.\d+)?)(\s+)?(mile(s)?|mi)([\ \.\,\?]|$)/i, (msg) ->
     unit = msg.match[1]
     converted_unit = (unit * 1.61).toFixed(2)
 
@@ -35,7 +35,7 @@ module.exports = (robot) ->
     msg.send(response)
 
   # Convert kilometers.
-  robot.hear /(-?\d+(\.\d+)?)(\s+)?(kilometer(s)?|km)([\ \.\,\?])/i, (msg) ->
+  robot.hear /(-?\d+(\.\d+)?)(\s+)?(kilometer(s)?|km)([\ \.\,\?]|$)/i, (msg) ->
     unit = msg.match[1]
     converted_unit = (unit * 0.62).toFixed(2)
 
