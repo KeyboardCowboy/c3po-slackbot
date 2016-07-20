@@ -1,1 +1,1 @@
-web: node slack_bot.js
+web: bin/hubot -a slack
