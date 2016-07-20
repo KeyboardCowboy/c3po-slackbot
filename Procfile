@@ -1,1 +1,1 @@
-web: node index.js
+web: node slack_bot.js
