@@ -6,7 +6,7 @@
 #   int[F|C]
 #
 # Author:
-#    KeyboardCowboy
+#    KeyboardCowboy <chris@lullabot.com>
 #
 module.exports = (robot) ->
   robot.hear /(\-?\d*)\ ?(f|c)([\ \.\,\?])/i, (msg) ->
