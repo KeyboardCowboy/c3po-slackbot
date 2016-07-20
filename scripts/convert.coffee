@@ -20,7 +20,8 @@ response = [
   '%1 is %2',
   '%1 == %2',
   '%1 or %2. Choose wisely, master %3',
-  'I say %1, R2 says %2'
+  'I say %1, R2 says %2',
+  "%3, are you quite sure you didn't mean %2"
 ]
 
 # Parse messages to print to slack.
