@@ -12,7 +12,7 @@ hellos = [
   "It sounds like Han! Oh, hello %.",
   "Well hello there, %.",
   "Good day, %.",
-  "If I may say so, sir, I noticed earlier the hyperdrive motivator has been damaged.",
+  "If I may say so, %, I noticed earlier the hyperdrive motivator has been damaged.",
   "Well, he seems very friendly.",
   "That sounds like an R2 unit in there! I wonder if... Hello? How interesting.",
   "Use the comlink? Oh my! I forgot, I turned it off. ",
@@ -31,6 +31,10 @@ hellos = [
 ]
 module.exports = (robot) ->
   robot.respond /(hello|hi|hey|goodday)/i, (msg) ->
+    hello = msg.random hellos
+    msg.send hello.replace "%", msg.message.user.name
+
+  robot.hear /(hello|hi|hey|goodday)\s+\@C\-3PO/i, (msg) ->
     hello = msg.random hellos
     msg.send hello.replace "%", msg.message.user.name
 
