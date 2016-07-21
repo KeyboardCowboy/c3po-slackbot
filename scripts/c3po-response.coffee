@@ -9,16 +9,14 @@
 #
 
 config = require('../config.json')
-greetings = require('../text/greetings.json')
-affirms = require('../text/affirmations.json')
-odds = require('../text/odds.json');
+speech = require('../speech.json')
 
 # Send a user some congrats.
 congratulate = (name, res, robot) ->
   karmaLog = robot.brain.get('karmaLog') || []
 
   # Send a basic congrats.
-  response = res.random(affirms).replace "%name", name
+  response = res.random(speech.affirmation).replace "%name", name
   res.send response
 
   now = new Date()
@@ -35,18 +33,20 @@ congratulate = (name, res, robot) ->
 module.exports = (robot) ->
   # Random greeting response.
   robot.respond /(hello|hi|hey|good day)/i, (msg) ->
-    hello = msg.random greetings
-    msg.send hello.replace "%", msg.message.user.name
+    msg.send msg.random(speech.greeting).replace "%", msg.message.user.name
 
   # Random greeting mention.
   robot.hear /(hello|hi|hey|good day)\s+\@c3po/i, (msg) ->
-    hello = msg.random greetings
-    msg.send hello.replace "%", msg.message.user.name
+    msg.send msg.random(speech.greeting).replace "%", msg.message.user.name
 
   # Welcome to the room greeting.
   robot.enter (msg) ->
     greeting = "Hello %. I am C-3PO, human-cyborg relations."
     msg.send greeting.replace "%", msg.message.user.name
+
+  # Respond to thanks.
+  robot.hear /(.*)?(thanks|thank you|you\'re the best)(.*)\@c3po(.*)?/i, (res) ->
+    res.send res.random(speech.thankyou).replace "%name", res.message.user.name
 
   # Link to the issue queue.
   robot.respond /(.*)(you\'re broke(n)?|you\'re drunk|fail|wtf[\?\!]+|that\'s wrong)(.*)|(^wtf$)/i, (res) ->
@@ -62,4 +62,4 @@ module.exports = (robot) ->
 
   # Niche responses.
   robot.hear /what are the odds/i, (res) ->
-    res.send res.random(odds).replace "%name", res.message.user.name
+    res.send res.random(speech.odds).replace "%name", res.message.user.name
