@@ -4,5 +4,14 @@
     "minutes": 60000,
     "hours": 3600000,
     "days": 86400000
+  },
+  "github": {
+    "user": "keyboardcowboy",
+    "url": {
+      "issues": "https://github.com/KeyboardCowboy/c3po-slackbot/issues"
+    },
+    "api": {
+      "issues": "repos/keyboardcowboy/c3po-slackbot/issues"
+    }
   }
 }

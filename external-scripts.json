@@ -1,5 +1,6 @@
 [
   "hubot-heroku-keepalive",
   "hubot-pearson-dictionary",
-  "hubot-urban"
+  "hubot-urban",
+  "githubot"
 ]
