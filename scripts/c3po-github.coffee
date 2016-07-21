@@ -34,7 +34,7 @@ module.exports = (robot) ->
     if (github_access res)
       github.post config.github.api.issues, data, (issue) ->
         res.send "I've reported the bug for you, sir."
-        res.send issue.url
+        res.send issue.html_url
 
   # Report an enhancement.
   robot.respond /(You|I|We) should be able to (.*)/i, (res) ->
@@ -46,4 +46,4 @@ module.exports = (robot) ->
     if (github_access res)
       github.post config.github.api.issues, data, (issue) ->
         res.send "I've logged the enhancement request for you, sir."
-        res.send issue.url
+        res.send issue.html_url
