@@ -33,7 +33,7 @@ module.exports = (robot) ->
 
     if (github_access res)
       github.post config.github.api.issues, data, (issue) ->
-        res.send "I've reported the bug for you, sir."
+        res.send "So sorry. I've reported the bug for you, sir."
         res.send issue.html_url
 
   # Report an enhancement.
@@ -45,5 +45,5 @@ module.exports = (robot) ->
 
     if (github_access res)
       github.post config.github.api.issues, data, (issue) ->
-        res.send "I've logged the enhancement request for you, sir."
+        res.send "I agree. I've logged the upgrade request for you, sir."
         res.send issue.html_url
