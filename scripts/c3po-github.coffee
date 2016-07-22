@@ -14,6 +14,15 @@
 config = require('../config.json')
 github = require('githubot')
 
+# Build a list of links for a json list of issues.
+format_issue_links = (issues) ->
+  links = ""
+  link = "<%url|%text>"
+  for issue in issues
+    links += " - " + link.replace("%url", issue.html_url).replace("%text", issue.title) + "\n"
+    links
+
+
 # Verify a user's access to github. (Should be just me.)
 github_access = (res) ->
   allowed = res.message.user.name == config.github.user
@@ -23,6 +32,7 @@ github_access = (res) ->
     res.send "Please try this as an alternative: " + config.github.url.issues
   allowed
 
+# Do the robot.
 module.exports = (robot) ->
   # Report a bug.
   robot.respond /(file|report) a bug\:(.*)/i, (res) ->
@@ -47,3 +57,30 @@ module.exports = (robot) ->
       github.post config.github.api.issues, data, (issue) ->
         res.send "I agree. I've logged the upgrade request for you, sir."
         res.send issue.html_url
+
+  # Fetch bugs.
+  robot.respond /What\'s wrong( with you)?\?/i, (res) ->
+    data = {labels: ['bug']}
+    github.get config.github.api.issues, data, (issues) ->
+      count = issues.length
+
+      res.send "There's nothing wrong with me.  I am 100% bug free." if count == 0
+      res.send "Oh just a few things." if count > 0 && count < 5
+      res.send "Quite a few things, I'm afraid." if count >= 5
+
+      links = format_issue_links issues
+      res.send links if links
+
+  # Fetch enhancements.
+  robot.respond /(upgrades|improvements|enhancements|what\'s new)\?/i, (res) ->
+    data = {labels: ['enhancement']}
+    github.get config.github.api.issues, data, (issues) ->
+      count = issues.length
+
+      #console.log issues
+
+      res.send "I am not currently scheduled for any upgrades." if count == 0
+      res.send "I am currently awaiting the following upgrades:" if count > 0
+
+      links = format_issue_links issues
+      res.send links if links
