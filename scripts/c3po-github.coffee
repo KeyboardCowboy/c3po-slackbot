@@ -83,4 +83,4 @@ module.exports = (robot) ->
       res.send "I am currently awaiting the following upgrades:" if count > 0
 
       links = format_issue_links issues
-      res.send links if links
+      res.send links if links != ''
