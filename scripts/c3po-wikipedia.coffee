@@ -19,6 +19,6 @@ module.exports = (robot) ->
         console.log("An error occurred[query=%s, error=%s]", subject, err)
         return
       else
-        res.send content
+        res.send slackify content
 
 
