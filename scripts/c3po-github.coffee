@@ -20,7 +20,7 @@ format_issue_links = (issues) ->
   link = "<%url|%text>"
   for issue in issues
     links += " - " + link.replace("%url", issue.html_url).replace("%text", issue.title) + "\n"
-    links
+  links
 
 
 # Verify a user's access to github. (Should be just me.)
@@ -59,7 +59,7 @@ module.exports = (robot) ->
         res.send issue.html_url
 
   # Fetch bugs.
-  robot.respond /What\'s wrong( with you)?\?/i, (res) ->
+  robot.respond /(What\'s wrong)( with you)?\?/i, (res) ->
     data = {labels: ['bug']}
     github.get config.github.api.issues, data, (issues) ->
       count = issues.length
@@ -76,8 +76,6 @@ module.exports = (robot) ->
     data = {labels: ['enhancement']}
     github.get config.github.api.issues, data, (issues) ->
       count = issues.length
-
-      #console.log issues
 
       res.send "I am not currently scheduled for any upgrades." if count == 0
       res.send "I am currently awaiting the following upgrades:" if count > 0
