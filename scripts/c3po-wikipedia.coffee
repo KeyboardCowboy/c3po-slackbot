@@ -21,11 +21,7 @@ module.exports = (robot) ->
         console.log("An error occurred[query=%s, error=%s]", subject, err)
         return
       else
-        response = {
-          "text": slackify content
-          "parse": "full"
-        }
-        res.send response
+        res.send slackify content
         return
 
 
