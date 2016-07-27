@@ -10,23 +10,12 @@
 #
 convert = require('convert-units')
 
-response = [
-  "%1 converts to %2",
-  "%1 is the same as %2",
-  "%1 equals %2",
-  "%1 is equal to %2",
-  "%1 is equivalent to %2",
-  "%1 could be written as %2",
-  "%1 is %2",
-  "%1 == %2",
-  "%1 or %2. Choose wisely, master %3",
-  "I say it's %1 but R2 says %2",
-  "%3, are you quite sure you didn't mean %2?"
-]
+config = require('../config.json')
+speech = require('../speech.json')
 
 # Parse messages to print to slack.
 parse_response = (slack, value1, unit1, value2, unit2) ->
-  res = slack.random response
+  res = slack.random speech.conversions
   res = res.replace '%1', value1 + unit1
   res = res.replace '%2', value2 + unit2
   res = res.replace '%3', slack.message.user.name
@@ -34,31 +23,31 @@ parse_response = (slack, value1, unit1, value2, unit2) ->
 
 module.exports = (robot) ->
   # Convert Fahrenheit.
-  robot.hear /(-?\d+(\.\d+)?)(\s+)?(f)([\ \.\,\?]|$)/i, (msg) ->
+  robot.hear /(-?\d+(\.\d+)?)(\s+)?(f)\b/i, (msg) ->
     value = msg.match[1]
     converted_value = convert(value).from('F').to('C').toFixed(1);
     msg.send parse_response msg, value, '°F', converted_value, '°C'
 
   # Convert Celsius.
-  robot.hear /(-?\d+(\.\d+)?)(\s+)?(c)([\ \.\,\?]|$)/i, (msg) ->
+  robot.hear /(-?\d+(\.\d+)?)(\s+)?(c)\b/i, (msg) ->
     value = msg.match[1]
     converted_value = convert(value).from('C').to('F').toFixed(1);
     msg.send parse_response msg, value, '°C', converted_value, '°F'
 
   # Convert miles.
-  robot.hear /(-?\d+(\.\d+)?)(\s+)?(mile(s)?|mi)([\ \.\,\?]|$)/i, (msg) ->
+  robot.hear /(-?\d+(\.\d+)?)(\s+)?(mile(s)?|mi)\b/i, (msg) ->
     value = msg.match[1]
     converted_value = convert(value).from('mi').to('km').toFixed(2);
     msg.send parse_response msg, value, ' miles', converted_value, ' kilometers'
 
   # Convert kilometers.
-  robot.hear /(-?\d+(\.\d+)?)(\s+)?(kilometer(s)?|km)([\ \.\,\?]|$)/i, (msg) ->
+  robot.hear /(-?\d+(\.\d+)?)(\s+)?(kilometer(s)?|km)\b/i, (msg) ->
     value = msg.match[1]
     converted_value = convert(value).from('km').to('mi').toFixed(2);
     msg.send parse_response msg, value, ' kilometers', converted_value, ' miles'
 
   # Convert rods/hogshead.
-  robot.hear /(-?\d+(\.\d+)?) rods( per |\/| to the )hogshead([\ \.\,\?]|$)/i, (res) ->
+  robot.hear /(-?\d+(\.\d+)?) rods( per |\/| to the )hogshead\b/i, (res) ->
     value = res.match[1];
     converted_value = ((value * .0031) / 63).toFixed(4);
     res.send "Mr. Simpson, " + value + " rods to the hogshead is " + converted_value, " miles per gallon."
