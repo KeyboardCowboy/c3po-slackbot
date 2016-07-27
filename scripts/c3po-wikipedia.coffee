@@ -16,10 +16,14 @@ module.exports = (robot) ->
     subject = res.match[4]
     options = {query: subject, format: "html", summaryOnly: true};
     wiki.searchArticle options, (err, content) ->
-      if err
-        console.log("An error occurred[query=%s, error=%s]", subject, err)
+      if err || content == ''
+        res.send "So sorry.  I'm not sure I know what you mean."
         return
       else
-        # Get the first paragraph.
+        # Get the first paragraph if this is not a reference list.
         paragraphs = content.split "\n"
-        res.send slackify paragraphs[0] + "\nhttp://en.wikipedia.org/wiki/" + subject
+
+        if paragraphs[0].indexOf('may refer to:') == -1
+          res.send slackify paragraphs[0] + "\nhttp://en.wikipedia.org/wiki/" + subject
+        else
+          res.send slackify content + "\nhttp://en.wikipedia.org/wiki/" + subject
