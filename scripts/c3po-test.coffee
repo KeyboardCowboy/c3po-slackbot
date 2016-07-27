@@ -10,3 +10,6 @@ module.exports = (robot) ->
 
   robot.respond /(Print two lines)\b/i, (res) ->
     res.send "Here is a single line of text.\nAnd here is another."
+
+  robot.respond /(Print a link)\b/i, (res) ->
+    res.send "Here is a single line of text with <http://slack.com|a link>."
