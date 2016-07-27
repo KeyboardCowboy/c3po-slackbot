@@ -11,6 +11,7 @@
 config = require('../config.json')
 speech = require('../speech.json')
 wiki = require("wikipedia-js")
+slackify = require('slackify-html')
 
 module.exports = (robot) ->
   robot.respond /(who|what) (is|are) (.*)\?/i, (res) ->
@@ -21,7 +22,7 @@ module.exports = (robot) ->
         console.log("An error occurred[query=%s, error=%s]", subject, err)
         return
       else
-        res.send content
+        res.send slackify content
         return
 
 
