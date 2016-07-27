@@ -15,7 +15,8 @@
     "hubot-pearson-dictionary": "^1.0",
     "githubot": "^0.5",
     "wikipedia-js": "^0.0",
-    "slackify-html": "^1.0"
+    "slackify-html": "^1.0",
+    "money": "^0.2"
   },
   "engines": {
     "node": "0.10.x"

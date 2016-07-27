@@ -9,6 +9,7 @@
 #    KeyboardCowboy <chris@lullabot.com>
 #
 convert = require('convert-units')
+currency = require('money')
 
 config = require('../config.json')
 speech = require('../speech.json')
@@ -65,3 +66,14 @@ module.exports = (robot) ->
       response = "Oh dear.  I don't seem to recognize that conversion.  Did you supply the proper units?\n"
       response += "Try one of these: " + convert().possibilities()
       msg.send(response)
+
+  # Listen for currency by symbol.
+  robot.hear /([\$\€\£])(\d+(\.\d{2})?)/i, (res) ->
+    symbol = res.match[1]
+    amount = res.match[2]
+
+    converted_amount = currency.convert(amount, {from: "GBP", to: "HKD"});
+
+    console.log(converted_amount)
+
+    res.send "That's " + converted_amount + " euros"
