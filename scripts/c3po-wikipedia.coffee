@@ -8,8 +8,6 @@
 #    KeyboardCowboy <chris@lullabot.com>
 #
 
-config = require('../config.json')
-speech = require('../speech.json')
 wiki = require("wikipedia-js")
 slackify = require('slackify-html')
 
@@ -21,7 +19,6 @@ module.exports = (robot) ->
         console.log("An error occurred[query=%s, error=%s]", subject, err)
         return
       else
-        res.send slackify content
-        return
+        res.send content
 
 
