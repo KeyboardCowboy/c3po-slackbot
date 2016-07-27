@@ -59,7 +59,7 @@ module.exports = (robot) ->
         res.send issue.html_url
 
   # Fetch bugs.
-  robot.respond /(What\'s wrong)(\ with you)?\?/i, (res) ->
+  robot.respond /bugs|What's wrong( with you)?\?/i, (res) ->
     data = {labels: ['bug']}
     github.get config.github.api.issues, data, (issues) ->
       count = issues.length
@@ -71,7 +71,7 @@ module.exports = (robot) ->
       res.send response
 
   # Fetch enhancements.
-  robot.respond /(upgrades|improvements|enhancements|what\'s new)\?/i, (res) ->
+  robot.respond /(upgrades|improvements|enhancements|what's new)\?/i, (res) ->
     data = {labels: ['enhancement']}
     github.get config.github.api.issues, data, (issues) ->
       count = issues.length
