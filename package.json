@@ -13,7 +13,8 @@
     "hubot-slack": "^3.3.0",
     "convert-units": "^1.0",
     "hubot-pearson-dictionary": "^1.0",
-    "githubot": "^0.5"
+    "githubot": "^0.5",
+    "wikipedia-js": "^0.0"
   },
   "engines": {
     "node": "0.10.x"
