@@ -12,13 +12,14 @@ wiki = require("wikipedia-js")
 slackify = require('slackify-html')
 
 module.exports = (robot) ->
-  robot.respond /(who|what) (is|are) (.*)\?/i, (res) ->
-    options = {query: res.match[3], format: "html", summaryOnly: true};
+  robot.respond /(who|what) (is|are) (a[n]? )?(.*)\?/i, (res) ->
+    subject = res.match[4]
+    options = {query: subject, format: "html", summaryOnly: true};
     wiki.searchArticle options, (err, content) ->
       if err
         console.log("An error occurred[query=%s, error=%s]", subject, err)
         return
       else
-        res.send slackify content
-
-
+        # Get the first paragraph.
+        paragraphs = content.split "\n"
+        res.send slackify paragraphs[0] + "\nhttp://en.wikipedia.org/wiki/" + subject
